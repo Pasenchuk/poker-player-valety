@@ -7,6 +7,7 @@ import org.leanpoker.player.models.HoleCard;
 import org.leanpoker.player.models.PokerPlayer;
 
 import static org.leanpoker.player.PokerUtils.*;
+import java.util.Random;
 
 public class Player {
 
@@ -50,14 +51,19 @@ public class Player {
               if (r1 > 9 && r2 >9) {
                 return ourBank;
               } else {
+                Random rand = new Random();
+                int value = rand.nextInt(8)+2;
+
+                if (r1 > value) {
+                  return call(game);
+                }
+
                 return 0;
               }
 
               // return raise(game);
           }
-
           //        return game.getSmallBlind();
-
           return 0;
 
         } else {
