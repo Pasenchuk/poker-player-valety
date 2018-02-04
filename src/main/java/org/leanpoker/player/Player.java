@@ -19,6 +19,9 @@ public class Player {
 
         final boolean preflopGaming = game.getCommunityCards().size() > 0 ? false : true;
         if (preflopGaming) {
+          if (getActivePlayerCount < 3) {
+            return betGaming(game);
+          } else
           return preFlopStrategy(game);
         } else {
           return oldStrategy(game);
@@ -35,11 +38,36 @@ public class Player {
             return allIn(game);
 
         if (preFlopProbability > 50)
-            return raise(game, preFlopProbability);
+            return raise(game);
 
         if (preFlopProbability > 40) {
             final int call = call(game);
-            if (call / me.getStack() < 0.5)
+            if (call < me.getStack())
+                return call;
+        }
+
+        return 0;
+    }
+
+    private static int betGaming(Game game) {
+        final PokerPlayer me = getMe(game);
+
+        if (game.getBetIndex() < 3) {
+          return raise(game);
+        } else return allIn(game);
+
+
+        final float preFlopProbability = getPreFlopProbability(game);
+
+        if (preFlopProbability > 60)
+            return allIn(game);
+
+        if (preFlopProbability > 50)
+            return raise(game);
+
+        if (preFlopProbability > 40) {
+            final int call = call(game);
+            if (call < me.getStack())
                 return call;
         }
 
