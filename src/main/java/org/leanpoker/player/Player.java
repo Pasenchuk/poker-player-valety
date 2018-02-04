@@ -35,7 +35,7 @@ public class Player {
             return allIn(game);
 
         if (preFlopProbability > 50)
-            return raise(game);
+            return raise(game, preFlopProbability);
 
         if (preFlopProbability > 40) {
             final int call = call(game);
