@@ -19,7 +19,7 @@ public class Player {
 
         final boolean preflopGaming = game.getCommunityCards().size() > 0 ? false : true;
         if (preflopGaming) {
-          if (getActivePlayerCount < 3) {
+          if (getActivePlayerCount(game) < 3) {
             return betGaming(game);
           } else
           return preFlopStrategy(game);
