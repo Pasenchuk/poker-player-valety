@@ -6,6 +6,8 @@ import org.leanpoker.player.models.Game;
 import org.leanpoker.player.models.HoleCard;
 import org.leanpoker.player.models.PokerPlayer;
 
+import static org.leanpoker.player.PokerUtils.*;
+
 public class Player {
 
     static final String VERSION = "v 0.3";
@@ -45,18 +47,5 @@ public class Player {
     public static void showdown(JsonElement game) {
     }
 
-    private static PokerPlayer getMe(Game game) {
-        return game.getPlayers().get(game.getInAction());
-    }
-
-    private static int call(Game game) {
-        final PokerPlayer me = getMe(game);
-        return game.getCurrentBuyIn() - me.getBet();
-    }
-
-    private static int raise(Game game) {
-        final PokerPlayer me = getMe(game);
-        return game.getCurrentBuyIn() - me.getBet() + game.getMinimumRaise();
-    }
 
 }
