@@ -21,8 +21,12 @@ public class Player {
 
         final int communityCardsCount = game.getCommunityCards().size();
         if (communityCardsCount == 0) {
-            return preFlopStrategy(game);
+            if (getActivePlayerCount(game) < 3) {
+                return betGaming(game);
+            } else
+                return preFlopStrategy(game);
         }
+
         if (communityCardsCount >= 3) {
             final LinkedList<Card> cards = new LinkedList<>();
             cards.addAll(game.getCommunityCards());
@@ -33,9 +37,9 @@ public class Player {
                 final int halfOfBank = me.getStack() / 2;
                 if (raise(game) > halfOfBank)
                     return raise(game);
-                if (call(game)< halfOfBank)
+                if (call(game) < halfOfBank)
                     return halfOfBank;
-                 return call(game);
+                return call(game);
             }
         }
 
@@ -52,15 +56,23 @@ public class Player {
             return allIn(game);
 
         if (preFlopProbability > 50)
-            return raise(game, preFlopProbability);
+            return raise(game, 40);
 
         if (preFlopProbability > 40) {
             final int call = call(game);
-            if (call / me.getStack() < 0.5)
+            if (call < me.getStack())
                 return call;
         }
 
         return 0;
+    }
+
+    private static int betGaming(Game game) {
+        final PokerPlayer me = getMe(game);
+
+        if (game.getBetIndex() < 3) {
+            return raise(game, 40);
+        } else return allIn(game);
     }
 
     private static int oldStrategy(Game game) {
