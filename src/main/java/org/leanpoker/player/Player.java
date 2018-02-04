@@ -64,10 +64,19 @@ public class Player {
               // return raise(game);
           }
           //        return game.getSmallBlind();
+
+          if (r1 >= 12 || r2 >= 12) {
+            return call(game);
+          }
+
           return 0;
 
         } else {
           // FLOP, TURN, RIVER
+
+          if (game.getCurrentBuyIn() > (0.3 * ourBank)) {
+            return 0;
+          }
 
           return call(game);
         }
