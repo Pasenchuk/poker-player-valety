@@ -24,22 +24,32 @@ public class Player {
         final boolean suited = hc1.getSuit().equals(hc2.getSuit());
         final boolean pair = hc1.getRank().equals(hc2.getRank());
 
+        final boolean preflopGaming = game.getCommunityCards().size() > 0 ? false : true;
+
 //        if (suited && pair)
 //            return raise(game);
+        if (preflopGaming) {
+          // PREFLOP only 2 cards on hands
 
-        if (suited) {
-//            return (int) (ourBank * 0.5);
-            return call(game);
+          if (suited) {
+          //            return (int) (ourBank * 0.5);
+              return call(game);
+          }
+
+          if (pair) {
+          //            return (int) (ourBank * 0.3);
+              return raise(game);
+          }
+
+          //        return game.getSmallBlind();
+
+          return 0;
+
+        } else {
+          // FLOP, TURN, RIVER
+
+          return call(game);
         }
-
-        if (pair) {
-//            return (int) (ourBank * 0.3);
-            return raise(game);
-        }
-
-//        return game.getSmallBlind();
-
-        return 0;
     }
 
     public static void showdown(JsonElement game) {
