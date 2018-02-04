@@ -27,7 +27,7 @@ public class Player {
           }
         }
 
-        return 10;
+        return game.getSmallBlind();
     }
 
     private static PokerPlayer getMe(Game game) {
