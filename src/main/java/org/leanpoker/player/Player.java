@@ -8,7 +8,7 @@ import org.leanpoker.player.models.PokerPlayer;
 
 public class Player {
 
-    static final String VERSION = "v 0.2";
+    static final String VERSION = "v 0.3";
 
     public static int betRequest(JsonElement request) {
         final Game game = new Gson().fromJson(request, Game.class);
@@ -24,8 +24,8 @@ public class Player {
         final boolean suited = hc1.getSuit().equals(hc2.getSuit());
         final boolean pair = hc1.getRank().equals(hc2.getRank());
 
-        if (suited && pair)
-            return raise(game);
+//        if (suited && pair)
+//            return raise(game);
 
         if (suited) {
 //            return (int) (ourBank * 0.5);
@@ -34,7 +34,7 @@ public class Player {
 
         if (pair) {
 //            return (int) (ourBank * 0.3);
-            return call(game);
+            return raise(game);
         }
 
 //        return game.getSmallBlind();
