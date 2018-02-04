@@ -6,16 +6,40 @@ import org.leanpoker.player.models.Game;
 import org.leanpoker.player.models.HoleCard;
 import org.leanpoker.player.models.PokerPlayer;
 
-import static org.leanpoker.player.PokerUtils.*;
 import java.util.Random;
+
+import static org.leanpoker.player.PokerUtils.*;
 
 public class Player {
 
-    static final String VERSION = "v 0.3";
+    static final String VERSION = "v 0.4";
 
     public static int betRequest(JsonElement request) {
         final Game game = new Gson().fromJson(request, Game.class);
 
+        return preFlopStrategy(game);
+    }
+
+    private static int preFlopStrategy(Game game) {
+
+        final PokerPlayer me = getMe(game);
+        final float preFlopProbability = getPreFlopProbability(game);
+
+        if (preFlopProbability > 60)
+            return allIn(game);
+
+        if (preFlopProbability > 50)
+            return raise(game);
+
+        if (preFlopProbability > 40)
+            return call(game);
+
+        return 0;
+
+    }
+
+
+    private static int oldStrategy(Game game) {
         final PokerPlayer me = getMe(game);
 
         final HoleCard hc1 = me.getHoleCards().get(0);
@@ -32,53 +56,53 @@ public class Player {
 //        if (suited && pair)
 //            return raise(game);
         if (preflopGaming) {
-          // PREFLOP only 2 cards on hands
+            // PREFLOP only 2 cards on hands
 
-          int r1 = getValueRank(hc1);
-          int r2 = getValueRank(hc2);
+            int r1 = getValueRank(hc1);
+            int r2 = getValueRank(hc2);
 
-          if (suited) {
-          //            return (int) (ourBank * 0.5);
-              if (r1 > 9 && r2 >9) {
-                return call(game);
-              } else {
-                return 0;
-              }
-          }
+            if (suited) {
+                //            return (int) (ourBank * 0.5);
+                if (r1 > 9 && r2 > 9) {
+                    return call(game);
+                } else {
+                    return 0;
+                }
+            }
 
-          if (pair) {
-          //            return (int) (ourBank * 0.3);
-              if (r1 > 9 && r2 >9) {
-                return ourBank;
-              } else {
-                Random rand = new Random();
-                int value = rand.nextInt(8)+2;
+            if (pair) {
+                //            return (int) (ourBank * 0.3);
+                if (r1 > 9 && r2 > 9) {
+                    return ourBank;
+                } else {
+                    Random rand = new Random();
+                    int value = rand.nextInt(8) + 2;
 
-                if (r1 > value) {
-                  return call(game);
+                    if (r1 > value) {
+                        return call(game);
+                    }
+
+                    return 0;
                 }
 
-                return 0;
-              }
+                // return raise(game);
+            }
+            //        return game.getSmallBlind();
 
-              // return raise(game);
-          }
-          //        return game.getSmallBlind();
+            if (r1 >= 12 || r2 >= 12) {
+                return call(game);
+            }
 
-          if (r1 >= 12 || r2 >= 12) {
-            return call(game);
-          }
-
-          return 0;
+            return 0;
 
         } else {
-          // FLOP, TURN, RIVER
+            // FLOP, TURN, RIVER
 
-          if (game.getCurrentBuyIn() > (0.3 * ourBank)) {
-            return 0;
-          }
+            if (game.getCurrentBuyIn() > (0.3 * ourBank)) {
+                return 0;
+            }
 
-          return call(game);
+            return call(game);
         }
     }
 

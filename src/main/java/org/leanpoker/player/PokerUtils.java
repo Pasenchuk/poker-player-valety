@@ -27,7 +27,8 @@ public class PokerUtils {
         final Hand hand = new Hand(game);
         for (Hand preFlopHand : preFlopHands) {
             if (preFlopHand.equals(hand))
-                return preFlopHand.getWinProbability(getActivePlayerCount(game));
+//                return preFlopHand.getWinProbability(getActivePlayerCount(game));
+                return preFlopHand.getWinProbability(3);
         }
         return 0;
     }
@@ -89,6 +90,10 @@ public class PokerUtils {
 
     public static PokerPlayer getMe(Game game) {
         return game.getPlayers().get(game.getInAction());
+    }
+
+    public static int allIn(Game game) {
+        return getMe(game).getStack();
     }
 
     public static int call(Game game) {
