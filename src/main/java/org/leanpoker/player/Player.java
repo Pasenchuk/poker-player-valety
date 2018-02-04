@@ -33,14 +33,27 @@ public class Player {
         if (preflopGaming) {
           // PREFLOP only 2 cards on hands
 
+          int r1 = getValueRank(hc1);
+          int r2 = getValueRank(hc2);
+
           if (suited) {
           //            return (int) (ourBank * 0.5);
-              return call(game);
+              if (r1 > 9 && r2 >9) {
+                return call(game);
+              } else {
+                return 0;
+              }
           }
 
           if (pair) {
           //            return (int) (ourBank * 0.3);
-              return raise(game);
+              if (r1 > 9 && r2 >9) {
+                return ourBank;
+              } else {
+                return 0;
+              }
+
+              // return raise(game);
           }
 
           //        return game.getSmallBlind();

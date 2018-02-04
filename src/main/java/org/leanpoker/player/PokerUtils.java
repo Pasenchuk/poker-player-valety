@@ -6,7 +6,7 @@ import org.leanpoker.player.models.PokerPlayer;
 
 public class PokerUtils {
 
-    public static int getRank(HoleCard card) {
+    public static int getValueRank(HoleCard card) {
         switch (card.getRank()) {
             case "2":
                 return 2;
