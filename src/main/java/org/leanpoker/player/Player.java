@@ -57,24 +57,7 @@ public class Player {
         if (game.getBetIndex() < 3) {
           return raise(game, 40);
         } else return allIn(game);
-
-
-        final float preFlopProbability = getPreFlopProbability(game);
-
-        if (preFlopProbability > 60)
-            return allIn(game);
-
-        if (preFlopProbability > 50)
-            return raise(game, 40);
-
-        if (preFlopProbability > 40) {
-            final int call = call(game);
-            if (call < me.getStack())
-                return call;
         }
-
-        return 0;
-    }
 
     private static int oldStrategy(Game game) {
         final PokerPlayer me = getMe(game);
