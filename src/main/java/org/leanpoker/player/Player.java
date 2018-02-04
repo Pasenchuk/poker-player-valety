@@ -21,17 +21,25 @@ public class Player {
         final int currentPot = game.getPot();
         final int ourBank = me.getStack();
 
-        if (hc1.getSuit().equals(hc2.getSuit())) {
-            return (int) (ourBank * 0.5);
-        } else {
-            if (hc1.getRank().equals(hc2.getRank())) {
-                return (int) (ourBank * 0.3);
-            }
+        final boolean suited = hc1.getSuit().equals(hc2.getSuit());
+        final boolean pair = hc1.getRank().equals(hc2.getRank());
+
+        if (suited && pair)
+            return raise(game);
+
+        if (suited) {
+//            return (int) (ourBank * 0.5);
+            return call(game);
         }
 
-        return game.getSmallBlind();
+        if (pair) {
+//            return (int) (ourBank * 0.3);
+            return call(game);
+        }
 
-//        return call(game);
+//        return game.getSmallBlind();
+
+        return 0;
     }
 
     public static void showdown(JsonElement game) {
