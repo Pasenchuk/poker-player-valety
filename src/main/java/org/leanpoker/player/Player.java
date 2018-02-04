@@ -21,8 +21,8 @@ public class Player {
     }
 
     private static int preFlopStrategy(Game game) {
-
         final PokerPlayer me = getMe(game);
+
         final float preFlopProbability = getPreFlopProbability(game);
 
         if (preFlopProbability > 60)
@@ -31,8 +31,11 @@ public class Player {
         if (preFlopProbability > 50)
             return raise(game);
 
-        if (preFlopProbability > 40)
-            return call(game);
+        if (preFlopProbability > 40) {
+            final int call = call(game);
+            if (call < me.getStack())
+                return call;
+        }
 
         return 0;
 
