@@ -101,8 +101,10 @@ public class PokerUtils {
         return game.getCurrentBuyIn() - me.getBet();
     }
 
-    public static int raise(Game game) {
+    public static int raise(Game game, float probability) {
         final PokerPlayer me = getMe(game);
-        return game.getCurrentBuyIn() - me.getBet() + game.getMinimumRaise();
+        // waiting probability from 50 to 40
+        int rise_sum = (int) Math.max((probability - 40)* 0.2 * me.getStack(), game.getMinimumRaise());
+        return game.getCurrentBuyIn() - me.getBet() + rise_sum;
     }
 }
