@@ -14,7 +14,7 @@ import static org.leanpoker.player.PokerUtils.*;
 
 public class Player {
 
-    static final String VERSION = "v 0.4";
+    static final String VERSION = "v 0.5";
 
     public static int betRequest(JsonElement request) {
         final Game game = new Gson().fromJson(request, Game.class);
@@ -23,7 +23,7 @@ public class Player {
         if (communityCardsCount == 0) {
             return preFlopStrategy(game);
         }
-        if (communityCardsCount == 3) {
+        if (communityCardsCount >= 3) {
             final LinkedList<Card> cards = new LinkedList<>();
             cards.addAll(game.getCommunityCards());
             final PokerPlayer me = getMe(game);
