@@ -7,6 +7,7 @@ import org.leanpoker.player.models.HoleCard;
 import org.leanpoker.player.models.PokerPlayer;
 
 import static org.leanpoker.player.PokerUtils.*;
+import java.util.Random;
 
 public class Player {
 
@@ -26,22 +27,50 @@ public class Player {
         final boolean suited = hc1.getSuit().equals(hc2.getSuit());
         final boolean pair = hc1.getRank().equals(hc2.getRank());
 
+        final boolean preflopGaming = game.getCommunityCards().size() > 0 ? false : true;
+
 //        if (suited && pair)
 //            return raise(game);
+        if (preflopGaming) {
+          // PREFLOP only 2 cards on hands
 
-        if (suited) {
-//            return (int) (ourBank * 0.5);
-            return call(game);
+          int r1 = getValueRank(hc1);
+          int r2 = getValueRank(hc2);
+
+          if (suited) {
+          //            return (int) (ourBank * 0.5);
+              if (r1 > 9 && r2 >9) {
+                return call(game);
+              } else {
+                return 0;
+              }
+          }
+
+          if (pair) {
+          //            return (int) (ourBank * 0.3);
+              if (r1 > 9 && r2 >9) {
+                return ourBank;
+              } else {
+                Random rand = new Random();
+                int value = rand.nextInt(8)+2;
+
+                if (r1 > value) {
+                  return call(game);
+                }
+
+                return 0;
+              }
+
+              // return raise(game);
+          }
+          //        return game.getSmallBlind();
+          return 0;
+
+        } else {
+          // FLOP, TURN, RIVER
+
+          return call(game);
         }
-
-        if (pair) {
-//            return (int) (ourBank * 0.3);
-            return raise(game);
-        }
-
-//        return game.getSmallBlind();
-
-        return 0;
     }
 
     public static void showdown(JsonElement game) {
