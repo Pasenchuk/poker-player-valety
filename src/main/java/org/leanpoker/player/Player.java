@@ -3,17 +3,37 @@ package org.leanpoker.player;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import org.leanpoker.player.models.Game;
+import org.leanpoker.player.models.HoleCard;
 import org.leanpoker.player.models.PokerPlayer;
+
+import java.util.Objects;
 
 public class Player {
 
-    static final String VERSION = "v0.2 calling";
+    static final String VERSION = "v 0.1";
 
     public static int betRequest(JsonElement request) {
         final Game game = new Gson().fromJson(request, Game.class);
+
         final PokerPlayer me = getMe(game);
 
-        return call(game);
+        final HoleCard hc1 = me.getHoleCards().get(0);
+        final HoleCard hc2 = me.getHoleCards().get(1);
+
+        final int currentPot = game.getPot();
+        final int ourBank = me.getStack();
+
+        if (Objects.equals(hc1.getSuit(), hc2.getSuit())) {
+            return (int) (ourBank * 0.5);
+        } else {
+            if (Objects.equals(hc1.getRank(), hc2.getRank())) {
+                return (int) (ourBank * 0.3);
+            }
+        }
+
+        return game.getSmallBlind();
+
+//        return call(game);
     }
 
     public static void showdown(JsonElement game) {
@@ -32,4 +52,5 @@ public class Player {
         final PokerPlayer me = getMe(game);
         return game.getCurrentBuyIn() - me.getBet() + game.getMinimumRaise();
     }
+
 }
