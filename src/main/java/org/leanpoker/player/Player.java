@@ -4,8 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import org.leanpoker.player.models.Game;
 
-import java.util.Map;
-
 public class Player {
 
     static final String VERSION = "Default Java folding player";
