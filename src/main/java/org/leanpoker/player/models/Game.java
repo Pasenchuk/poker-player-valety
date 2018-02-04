@@ -46,7 +46,7 @@ public class Game {
     private List<PokerPlayer> players = null;
     @SerializedName("community_cards")
     @Expose
-    private List<CommunityCard> communityCards = null;
+    private List<Card> communityCards = null;
 
     public String getTournamentId() {
         return tournamentId;
@@ -144,11 +144,11 @@ public class Game {
         this.players = players;
     }
 
-    public List<CommunityCard> getCommunityCards() {
+    public List<Card> getCommunityCards() {
         return communityCards;
     }
 
-    public void setCommunityCards(List<CommunityCard> communityCards) {
+    public void setCommunityCards(List<Card> communityCards) {
         this.communityCards = communityCards;
     }
 }

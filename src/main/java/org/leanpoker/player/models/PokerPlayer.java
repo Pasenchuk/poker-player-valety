@@ -28,7 +28,7 @@ public class PokerPlayer {
     private int bet;
     @SerializedName("hole_cards")
     @Expose
-    private List<HoleCard> holeCards = null;
+    private List<Card> holeCards = null;
 
     public int getId() {
         return id;
@@ -78,11 +78,11 @@ public class PokerPlayer {
         this.bet = bet;
     }
 
-    public List<HoleCard> getHoleCards() {
+    public List<Card> getHoleCards() {
         return holeCards;
     }
 
-    public void setHoleCards(List<HoleCard> holeCards) {
+    public void setHoleCards(List<Card> holeCards) {
         this.holeCards = holeCards;
     }
 }

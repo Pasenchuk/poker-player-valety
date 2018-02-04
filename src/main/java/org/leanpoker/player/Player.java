@@ -2,11 +2,13 @@ package org.leanpoker.player;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import org.leanpoker.player.models.Card;
 import org.leanpoker.player.models.Game;
-import org.leanpoker.player.models.HoleCard;
 import org.leanpoker.player.models.PokerPlayer;
+import org.leanpoker.player.rainman.RainmanResponse;
+import org.leanpoker.player.rainman.RainmanUtils;
 
-import java.util.Random;
+import java.util.LinkedList;
 
 import static org.leanpoker.player.PokerUtils.*;
 
@@ -17,12 +19,27 @@ public class Player {
     public static int betRequest(JsonElement request) {
         final Game game = new Gson().fromJson(request, Game.class);
 
-        final boolean preflopGaming = game.getCommunityCards().size() > 0 ? false : true;
-        if (preflopGaming) {
-          return preFlopStrategy(game);
-        } else {
-          return oldStrategy(game);
+        final int communityCardsCount = game.getCommunityCards().size();
+        if (communityCardsCount == 0) {
+            return preFlopStrategy(game);
         }
+        if (communityCardsCount == 3) {
+            final LinkedList<Card> cards = new LinkedList<>();
+            cards.addAll(game.getCommunityCards());
+            final PokerPlayer me = getMe(game);
+            cards.addAll(me.getHoleCards());
+            final RainmanResponse rank = RainmanUtils.getRank(cards);
+            if (rank.getRank() >= 4) {
+                final int halfOfBank = me.getStack() / 2;
+                if (raise(game) > halfOfBank)
+                    return raise(game);
+                if (call(game)< halfOfBank)
+                    return halfOfBank;
+                 return call(game);
+            }
+        }
+
+        return oldStrategy(game);
         // return preFlopStrategy(game);
     }
 
@@ -52,8 +69,8 @@ public class Player {
         final int currentPot = game.getPot();
         final int ourBank = me.getStack();
 
-        final HoleCard hc1 = me.getHoleCards().get(0);
-        final HoleCard hc2 = me.getHoleCards().get(1);
+        final Card hc1 = me.getHoleCards().get(0);
+        final Card hc2 = me.getHoleCards().get(1);
 
         final boolean suited = hc1.getSuit().equals(hc2.getSuit());
         final boolean pair = hc1.getRank().equals(hc2.getRank());

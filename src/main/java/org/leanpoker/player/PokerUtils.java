@@ -3,7 +3,7 @@ package org.leanpoker.player;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;
 import org.leanpoker.player.models.Game;
-import org.leanpoker.player.models.HoleCard;
+import org.leanpoker.player.models.Card;
 import org.leanpoker.player.models.PokerPlayer;
 
 import java.io.File;
@@ -55,7 +55,7 @@ public class PokerUtils {
         return hands;
     }
 
-    public static int getValueRank(HoleCard card) {
+    public static int getValueRank(Card card) {
         switch (card.getRank()) {
             case "2":
                 return 2;
@@ -99,6 +99,11 @@ public class PokerUtils {
     public static int call(Game game) {
         final PokerPlayer me = getMe(game);
         return game.getCurrentBuyIn() - me.getBet();
+    }
+
+    public static int raise(Game game) {
+        final PokerPlayer me = getMe(game);
+        return game.getCurrentBuyIn() - me.getBet() + game.getMinimumRaise();
     }
 
     public static int raise(Game game, float probability) {

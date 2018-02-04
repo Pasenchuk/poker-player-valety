@@ -2,7 +2,7 @@ package org.leanpoker.player.rainman;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import org.leanpoker.player.models.HoleCard;
+import org.leanpoker.player.models.Card;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +12,10 @@ public class RainmanResponse {
 
     @SerializedName("cards")
     @Expose
-    private List<HoleCard> cards = new ArrayList<>();
+    private List<Card> cards = new ArrayList<>();
     @SerializedName("cards_used")
     @Expose
-    private List<HoleCard> cardsUsed = new ArrayList<>();
+    private List<Card> cardsUsed = new ArrayList<>();
     @SerializedName("rank")
     @Expose
     private int rank;
@@ -29,19 +29,19 @@ public class RainmanResponse {
     @Expose
     private List<Integer> kickers = new ArrayList<>();
 
-    public List<HoleCard> getCards() {
+    public List<Card> getCards() {
         return cards;
     }
 
-    public void setCards(List<HoleCard> cards) {
+    public void setCards(List<Card> cards) {
         this.cards = cards;
     }
 
-    public List<HoleCard> getCardsUsed() {
+    public List<Card> getCardsUsed() {
         return cardsUsed;
     }
 
-    public void setCardsUsed(List<HoleCard> cardsUsed) {
+    public void setCardsUsed(List<Card> cardsUsed) {
         this.cardsUsed = cardsUsed;
     }
 

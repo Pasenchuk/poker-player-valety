@@ -1,7 +1,7 @@
 package org.leanpoker.player.rainman;
 
 import com.google.gson.Gson;
-import org.leanpoker.player.models.HoleCard;
+import org.leanpoker.player.models.Card;
 import retrofit.RestAdapter;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public class RainmanUtils {
             .build()
             .create(RainmanApi.class);
 
-    public static RainmanResponse getRank(List<HoleCard> cards) {
+    public static RainmanResponse getRank(List<Card> cards) {
         return rainmanApi.getRank(gson.toJson(cards));
     }
 

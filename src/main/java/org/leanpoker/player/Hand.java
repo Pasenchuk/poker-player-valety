@@ -1,7 +1,7 @@
 package org.leanpoker.player;
 
 import org.leanpoker.player.models.Game;
-import org.leanpoker.player.models.HoleCard;
+import org.leanpoker.player.models.Card;
 import org.leanpoker.player.models.PokerPlayer;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public class Hand {
 
     public Hand(Game game) {
         final PokerPlayer me = getMe(game);
-        final List<HoleCard> holeCards = me.getHoleCards();
+        final List<Card> holeCards = me.getHoleCards();
         card1 = holeCards.get(0).getRank().replace("10", "T");
         card2 = holeCards.get(1).getRank().replace("10", "T");
         suited = holeCards.get(0).getSuit().equals(holeCards.get(1).getSuit());
