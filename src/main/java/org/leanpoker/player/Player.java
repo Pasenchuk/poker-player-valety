@@ -6,8 +6,6 @@ import org.leanpoker.player.models.Game;
 import org.leanpoker.player.models.HoleCard;
 import org.leanpoker.player.models.PokerPlayer;
 
-import java.util.Objects;
-
 public class Player {
 
     static final String VERSION = "v 0.1";
@@ -23,10 +21,10 @@ public class Player {
         final int currentPot = game.getPot();
         final int ourBank = me.getStack();
 
-        if (Objects.equals(hc1.getSuit(), hc2.getSuit())) {
+        if (hc1.getSuit().equals(hc2.getSuit())) {
             return (int) (ourBank * 0.5);
         } else {
-            if (Objects.equals(hc1.getRank(), hc2.getRank())) {
+            if (hc1.getRank().equals(hc2.getRank())) {
                 return (int) (ourBank * 0.3);
             }
         }
