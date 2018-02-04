@@ -8,7 +8,7 @@ import org.leanpoker.player.models.PokerPlayer;
 
 public class Player {
 
-    static final String VERSION = "v 0.1";
+    static final String VERSION = "v 0.2";
 
     public static int betRequest(JsonElement request) {
         final Game game = new Gson().fromJson(request, Game.class);
