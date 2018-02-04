@@ -65,7 +65,7 @@ public class Player {
           }
           //        return game.getSmallBlind();
 
-          if (r1 > 12 || r2 > 12) {
+          if (r1 >= 12 || r2 >= 12) {
             return call(game);
           }
 
