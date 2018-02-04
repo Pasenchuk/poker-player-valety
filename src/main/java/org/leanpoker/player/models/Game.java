@@ -43,7 +43,7 @@ public class Game {
     private int inAction;
     @SerializedName("players")
     @Expose
-    private List<Player> players = null;
+    private List<PokerPlayer> players = null;
     @SerializedName("community_cards")
     @Expose
     private List<CommunityCard> communityCards = null;
@@ -136,11 +136,11 @@ public class Game {
         this.inAction = inAction;
     }
 
-    public List<Player> getPlayers() {
+    public List<PokerPlayer> getPlayers() {
         return players;
     }
 
-    public void setPlayers(List<Player> players) {
+    public void setPlayers(List<PokerPlayer> players) {
         this.players = players;
     }
 
