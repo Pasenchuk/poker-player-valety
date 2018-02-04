@@ -45,6 +45,7 @@ dependencies {
 
     compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
     compile group: 'commons-io', name: 'commons-io', version: '2.5'
+    compile group: 'com.squareup.retrofit', name: 'retrofit', version: '1.9.0'
 
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
             "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
