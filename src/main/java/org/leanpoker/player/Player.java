@@ -40,7 +40,7 @@ public class Player {
             return allIn(game);
 
         if (preFlopProbability > 50)
-            return raise(game);
+            return raise(game, 40);
 
         if (preFlopProbability > 40) {
             final int call = call(game);
@@ -55,7 +55,7 @@ public class Player {
         final PokerPlayer me = getMe(game);
 
         if (game.getBetIndex() < 3) {
-          return raise(game);
+          return raise(game, 40);
         } else return allIn(game);
 
 
@@ -65,7 +65,7 @@ public class Player {
             return allIn(game);
 
         if (preFlopProbability > 50)
-            return raise(game);
+            return raise(game, 40);
 
         if (preFlopProbability > 40) {
             final int call = call(game);
